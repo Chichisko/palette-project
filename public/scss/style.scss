@@ -1,0 +1,129 @@
+$bg: #222222;
+$color_label: #ddd;
+$color_btn_text: #ffffff;
+$color_forms_text: #ffffff;
+$color_forms_bg: #444444;
+$color: #ad3636;
+$color_light: #b53838;
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+html {
+	position: relative;
+}
+body {
+	background-color: $bg;	
+}
+.register-wrap {
+	position: fixed;
+	display: block;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	.register{		
+		width: 560px;
+		height: 500px;
+		margin: 40px auto;
+		background-color: $bg;
+		// .label {
+		// 	font-weight: bold;
+		// 	font-family: sans-serif;
+		// 	color: $color_label;
+		// 	margin-bottom: 10px;
+		// 	font-size: 15px;
+		// }
+		// .input_text {
+		// 	resize: none;
+		// 	outline:none;
+		// 	width: 150px;
+		// 	height: 30px;
+		// 	margin-bottom: 15px;
+		// 	border-radius: 5px;
+		// 	line-height: 15px;
+		// 	font-size: 15px;
+		// 	padding: 5px;
+		// 	color: $color_forms_text;
+		// 	background-color: $color_forms_bg;
+		// 	border: 1px solid $color_label;
+		// }
+		.head {
+			background-color: $color;
+			color: $color_btn_text;
+			font-size: 20px;
+			font-family: sans-serif;
+			text-align: center;
+			padding: 10px;
+			height: 50px;
+			border-radius: 5px 5px 0 0;
+			position: relative;
+			.register_close {
+				position: absolute;
+				top: 25px;
+				right: 15px;
+				transform: translate(-50%, -50%);
+				cursor: pointer;
+			}			
+		}
+	}
+}
+.wrap {
+	max-width: 1300px;
+	margin: 0 auto;
+	.profile {
+		width: 250px;
+		margin-left: 10px;
+		.auth {
+			width: 150px;
+			display: flex;
+			flex-direction: column;
+			padding-top: 20px;
+			padding-bottom: 20px;
+			.label {
+				font-weight: bold;
+				font-family: sans-serif;
+				color: $color_label;
+				margin-bottom: 10px;
+				font-size: 15px;
+			}
+			.input_text {
+				resize: none;
+				outline:none;
+				width: 150px;
+				height: 30px;
+				margin-bottom: 15px;
+				border-radius: 5px;
+				line-height: 15px;
+				font-size: 15px;
+				padding: 5px;
+				color: $color_forms_text;
+				background-color: $color_forms_bg;
+				border: 1px solid $color_label;
+			}
+			.btn {
+				width: 150px;
+				height: 30px;
+				margin-bottom: 10px;
+				border-radius: 5px;
+				border: 1px solid $color;
+				background-color: $color;
+				color: $color_btn_text;
+				cursor: pointer;
+				&:hover {
+					background-color: $color_light;
+				}
+			}
+			.forgot_password {
+				color: $color;
+				text-align: center;
+				font-size: 15px;
+				text-decoration: none;
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+		}
+	}
+}
