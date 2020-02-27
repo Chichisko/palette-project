@@ -25,6 +25,44 @@ body {
   margin: 40px auto;
   background-color: #222222;
 }
+.register-wrap .register .form {
+  display: flex;
+  width: 400px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+.register-wrap .register .form .input_text {
+  resize: none;
+  outline: none;
+  width: 300px;
+  height: 30px;
+  margin: 0 auto;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  line-height: 15px;
+  font-size: 15px;
+  padding: 5px;
+  color: #ffffff;
+  background-color: #444444;
+  border: 1px solid #ddd;
+}
+.register-wrap .register .form .btn {
+  width: 300px;
+  height: 40px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  margin-top: 30px;
+  border-radius: 5px;
+  font-size: 20px;
+  border: 1px solid #ad3636;
+  background-color: #ad3636;
+  color: #ffffff;
+  cursor: pointer;
+  outline: none;
+}
+.register-wrap .register .form .btn:hover {
+  background-color: #b53838;
+}
 .register-wrap .register .head {
   background-color: #ad3636;
   color: #ffffff;
@@ -35,6 +73,7 @@ body {
   height: 50px;
   border-radius: 5px 5px 0 0;
   position: relative;
+  margin-bottom: 40px;
 }
 .register-wrap .register .head .register_close {
   position: absolute;
@@ -89,6 +128,7 @@ body {
   background-color: #ad3636;
   color: #ffffff;
   cursor: pointer;
+  outline: none;
 }
 .wrap .profile .auth .btn:hover {
   background-color: #b53838;
