@@ -9,29 +9,30 @@ html {
 }
 
 body {
-  background-color: #222222;
+  background-color: #ffffff;
 }
 
-.register-wrap {
+.register_wrap {
   position: fixed;
   display: block;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
 }
-.register-wrap .register {
+.register_wrap .register {
   width: 560px;
   height: 500px;
   margin: 40px auto;
-  background-color: #222222;
+  background-color: #ffffff;
+  border-radius: 5px 5px 0 0;
 }
-.register-wrap .register .form {
+.register_wrap .register .form {
   display: flex;
   width: 400px;
   margin: 0 auto;
   flex-wrap: wrap;
 }
-.register-wrap .register .form .input_text {
+.register_wrap .register .form .input_text {
   resize: none;
   outline: none;
   width: 300px;
@@ -42,11 +43,11 @@ body {
   line-height: 15px;
   font-size: 15px;
   padding: 5px;
-  color: #ffffff;
-  background-color: #444444;
-  border: 1px solid #ddd;
+  color: #222222;
+  background-color: #ffffff;
+  border: 1px solid #222222;
 }
-.register-wrap .register .form .btn {
+.register_wrap .register .form .btn {
   width: 300px;
   height: 40px;
   margin: 0 auto;
@@ -54,28 +55,28 @@ body {
   margin-top: 30px;
   border-radius: 5px;
   font-size: 20px;
-  border: 1px solid #ad3636;
-  background-color: #ad3636;
+  border: 1px solid #222222;
+  background-color: #222222;
   color: #ffffff;
   cursor: pointer;
   outline: none;
 }
-.register-wrap .register .form .btn:hover {
-  background-color: #b53838;
+.register_wrap .register .form .btn:hover {
+  background-color: #333333;
 }
-.register-wrap .register .head {
-  background-color: #ad3636;
+.register_wrap .register .head {
+  background-color: #222222;
   color: #ffffff;
   font-size: 20px;
   font-family: sans-serif;
   text-align: center;
-  padding: 10px;
+  padding: 15px;
   height: 50px;
   border-radius: 5px 5px 0 0;
   position: relative;
   margin-bottom: 40px;
 }
-.register-wrap .register .head .register_close {
+.register_wrap .register .head .register_close {
   position: absolute;
   top: 25px;
   right: 15px;
@@ -101,7 +102,7 @@ body {
 .wrap .profile .auth .label {
   font-weight: bold;
   font-family: sans-serif;
-  color: #ddd;
+  color: #222222;
   margin-bottom: 10px;
   font-size: 15px;
 }
@@ -115,26 +116,26 @@ body {
   line-height: 15px;
   font-size: 15px;
   padding: 5px;
-  color: #ffffff;
-  background-color: #444444;
-  border: 1px solid #ddd;
+  color: #222222;
+  background-color: #ffffff;
+  border: 1px solid #222222;
 }
 .wrap .profile .auth .btn {
   width: 150px;
   height: 30px;
   margin-bottom: 10px;
   border-radius: 5px;
-  border: 1px solid #ad3636;
-  background-color: #ad3636;
+  border: 1px solid #222222;
+  background-color: #222222;
   color: #ffffff;
   cursor: pointer;
   outline: none;
 }
 .wrap .profile .auth .btn:hover {
-  background-color: #b53838;
+  background-color: #333333;
 }
 .wrap .profile .auth .forgot_password {
-  color: #ad3636;
+  color: #222222;
   text-align: center;
   font-size: 15px;
   text-decoration: none;

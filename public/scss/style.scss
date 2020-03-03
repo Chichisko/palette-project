@@ -1,10 +1,11 @@
-$bg: #222222;
-$color_label: #ddd;
+$bg: #ffffff;
+$color_label: #222222;
 $color_btn_text: #ffffff;
-$color_forms_text: #ffffff;
-$color_forms_bg: #444444;
-$color: #ad3636;
-$color_light: #b53838;
+$color_forms_text: #222222;
+$color_forms_bg: #ffffff;
+$color: #222222;
+$color_light: #333333;
+
 
 * {
 	margin: 0;
@@ -17,7 +18,7 @@ html {
 body {
 	background-color: $bg;	
 }
-.register-wrap {
+.register_wrap {
 	position: fixed;
 	display: block;
 	width: 100%;
@@ -28,6 +29,7 @@ body {
 		height: 500px;
 		margin: 40px auto;
 		background-color: $bg;
+		border-radius: 5px 5px 0 0;
 		.form {
 			display: flex;
 			width: 400px;
@@ -72,7 +74,7 @@ body {
 			font-size: 20px;
 			font-family: sans-serif;
 			text-align: center;
-			padding: 10px;
+			padding: 15px;
 			height: 50px;
 			border-radius: 5px 5px 0 0;
 			position: relative;
