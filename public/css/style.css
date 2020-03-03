@@ -5,6 +5,7 @@
 }
 
 html {
+  font-family: sans-serif;
   position: relative;
 }
 
@@ -12,27 +13,27 @@ body {
   background-color: #ffffff;
 }
 
-.register_wrap {
+.registration_wrap {
   position: fixed;
   display: block;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
 }
-.register_wrap .register {
+.registration_wrap .registration {
   width: 560px;
   height: 500px;
   margin: 40px auto;
   background-color: #ffffff;
   border-radius: 5px 5px 0 0;
 }
-.register_wrap .register .form {
+.registration_wrap .registration .form {
   display: flex;
   width: 400px;
   margin: 0 auto;
   flex-wrap: wrap;
 }
-.register_wrap .register .form .input_text {
+.registration_wrap .registration .form .input_text {
   resize: none;
   outline: none;
   width: 300px;
@@ -47,7 +48,19 @@ body {
   background-color: #ffffff;
   border: 1px solid #222222;
 }
-.register_wrap .register .form .btn {
+.registration_wrap .registration .form .message_box {
+  width: 300px;
+  margin: 0 auto;
+  font-weight: bold;
+  font-size: 15px;
+  color: #a00;
+  padding: 15px;
+  text-align: center;
+}
+.registration_wrap .registration .form .error {
+  background-color: #f003;
+}
+.registration_wrap .registration .form .btn {
   width: 300px;
   height: 40px;
   margin: 0 auto;
@@ -61,14 +74,13 @@ body {
   cursor: pointer;
   outline: none;
 }
-.register_wrap .register .form .btn:hover {
+.registration_wrap .registration .form .btn:hover {
   background-color: #333333;
 }
-.register_wrap .register .head {
+.registration_wrap .registration .head {
   background-color: #222222;
   color: #ffffff;
   font-size: 20px;
-  font-family: sans-serif;
   text-align: center;
   padding: 15px;
   height: 50px;
@@ -76,7 +88,7 @@ body {
   position: relative;
   margin-bottom: 40px;
 }
-.register_wrap .register .head .register_close {
+.registration_wrap .registration .head .registration_close {
   position: absolute;
   top: 25px;
   right: 15px;
@@ -137,7 +149,7 @@ body {
 .wrap .profile .auth .forgot_password {
   color: #222222;
   text-align: center;
-  font-size: 15px;
+  font-size: 13px;
   text-decoration: none;
 }
 .wrap .profile .auth .forgot_password:hover {

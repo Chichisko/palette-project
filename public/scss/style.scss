@@ -13,18 +13,19 @@ $color_light: #333333;
 	box-sizing: border-box;
 }
 html {
+	font-family: sans-serif;
 	position: relative;
 }
 body {
 	background-color: $bg;	
 }
-.register_wrap {
+.registration_wrap {
 	position: fixed;
 	display: block;
 	width: 100%;
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.5);
-	.register{		
+	.registration{		
 		width: 560px;
 		height: 500px;
 		margin: 40px auto;
@@ -49,6 +50,18 @@ body {
 				color: $color_forms_text;
 				background-color: $color_forms_bg;
 				border: 1px solid $color_label;
+			}			
+			.message_box {
+				width: 300px;
+				margin: 0 auto;
+				font-weight: bold;
+				font-size: 15px;
+				color: #a00;
+				padding: 15px;
+				text-align: center;
+			}			
+			.error {
+				background-color: #f003;
 			}
 			.btn {
 				width: 300px;
@@ -72,14 +85,13 @@ body {
 			background-color: $color;
 			color: $color_btn_text;
 			font-size: 20px;
-			font-family: sans-serif;
 			text-align: center;
 			padding: 15px;
 			height: 50px;
 			border-radius: 5px 5px 0 0;
 			position: relative;
 			margin-bottom: 40px;
-			.register_close {
+			.registration_close {
 				position: absolute;
 				top: 25px;
 				right: 15px;
@@ -139,7 +151,7 @@ body {
 			.forgot_password {
 				color: $color;
 				text-align: center;
-				font-size: 15px;
+				font-size: 13px;
 				text-decoration: none;
 				&:hover {
 					text-decoration: underline;
