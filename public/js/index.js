@@ -51,7 +51,29 @@ $(() => {
 
         function sendRegistrationForm() {
         	if(checkForm()) {
-
+        		let data = {
+        			name: $('#name_reg').val(),
+        			login: $('#login_reg').val(),
+        			mail: $('#mail_reg').val(),
+        			password: $('#password_reg').val(),
+        		};
+        		$.ajax({
+        			url: '/registration',
+        			type: 'POST',
+        			dataType: 'json',
+        			data: data,
+        			error: (xmlHttp, status, errorThrown) => {
+        				alert('Request error: ' + status); //very bad style
+        			}
+        		}).done((data) => {
+        			if(data === {}) {
+        				registrationLogin.css('background-color', '#f003');
+	        			showFormError('Логин уже используется');
+        			} else {
+        				showRegistrationMessage();
+        				setTimeout(() => {window.location.href = '/';}, 1000);
+        			}
+        		})
         	}
         }
 
@@ -107,6 +129,15 @@ $(() => {
         	box.css('border', '1px solid #a00');
         	box.css('border-radius', '5px');
         	box.css('background-color', '#f003');
+        }
+        function showRegistrationMessage() {
+        	clearMessageBox();
+        	let box = $('#message_box');
+        	box.append('Регистрация прошла успешно');
+        	box.css('border', '1px solid #0a0');
+        	box.css('border-radius', '5px');
+        	box.css('background-color', '#0f03');
+        	box.css('color', '#0f0');
         }
         function clearMessageBox() {
         	let box = $('#message_box');
