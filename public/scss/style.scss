@@ -107,6 +107,35 @@ body {
 	.profile {
 		width: 250px;
 		margin-left: 10px;
+		.user {
+			width: 150px;
+			display: flex;
+			flex-direction: column;
+			padding-top: 20px;
+			padding-bottom: 20px;
+			.user-name {
+				font-weight: bold;
+				font-family: sans-serif;
+				text-align: center;
+				color: $color_label;
+				margin-bottom: 10px;
+				font-size: 20px;
+			}
+			.btn {
+				width: 150px;
+				height: 30px;
+				margin-bottom: 10px;
+				border-radius: 5px;
+				border: 1px solid $color;
+				background-color: $color;
+				color: $color_btn_text;
+				cursor: pointer;				
+				outline: none;
+				&:hover {
+					background-color: $color_light;
+				}
+			}
+		}
 		.auth {
 			width: 150px;
 			display: flex;

@@ -29,9 +29,10 @@ app.use(serveStatic(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
 	if(req.session.user) {
-		res.render('main');
+		res.render('mainAuth', {title: req.session.name, name: req.session.name});
+		console.log(req.session);
 	} else {
-		res.render('main');
+		res.render('main', {title: 'Palette'});
 	}	
 });
 app.post('/registration', (req, res) => {
@@ -45,10 +46,13 @@ app.post('/registration', (req, res) => {
 	User.create(user, (err, newUser) => {
 		if(err) {
 			console.log(err);
-			return res.json({});
-		}
-		req.session.user = user.login;
-		return res.json(user);
+			return res.json({error: true});
+		} else {
+			req.session.user = user.login;
+			req.session.name = user.name;
+			console.log(req.session);
+			return res.json(user);
+		}		
 	});
 });
 

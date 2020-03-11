@@ -66,7 +66,7 @@ $(() => {
         				alert('Request error: ' + status); //very bad style
         			}
         		}).done((data) => {
-        			if(data === {}) {
+        			if(data.error) {
         				registrationLogin.css('background-color', '#f003');
 	        			showFormError('Логин уже используется');
         			} else {
