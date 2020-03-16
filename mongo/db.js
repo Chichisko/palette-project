@@ -1,9 +1,6 @@
 const mongoose = require('mongoose');
-const db = 'mongodb://localhost/palette'
-mongoose.connect(db, {
-	useNewUrlParser: true,
-	useUnifiedTopology: true
-});
+const config = require('./../config/config');
+mongoose.connect(config.mongo.uri, config.mongo.settings);
 
 mongoose.connection.on('connected', () => {
 	console.log('Mongoose connected to ' + db);

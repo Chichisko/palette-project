@@ -5,6 +5,7 @@ const path = require('path');
 const serveStatic = require('serve-static');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const config = require('./config/config');
 require('./mongo/db.js');
 
 app.engine('ejs', require('ejs-locals'));
@@ -14,17 +15,10 @@ app.set('view engine', 'ejs');
 
 
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(session({
-	genid: (req) => {
-		return require('crypto').randomBytes(48).toString('hex');
-	},
-	secret: 'secret',
-	resave: true,
-	saveUninitialized: true,
-	cookie: {
-		maxAge: 60*60*1000*24
-	}	
-}));
+config.session.genid = (req) => {
+	return require('crypto').randomBytes(48).toString('hex');
+};
+app.use(session(config.session));
 app.use(serveStatic(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
@@ -56,6 +50,6 @@ app.post('/registration', (req, res) => {
 	});
 });
 
-app.listen(3000, () => {
-	console.log('Server is started on port 3000');
+app.listen(config.server.port, () => {
+	console.log(`Server is started on port ${config.server.port}`);
 });
