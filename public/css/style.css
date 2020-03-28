@@ -14,6 +14,7 @@ body {
 }
 
 .registration_wrap {
+  z-index: 100;
   position: fixed;
   display: block;
   width: 100%;
@@ -97,8 +98,10 @@ body {
 }
 
 .wrap {
+  z-index: 10;
   max-width: 1300px;
   margin: 0 auto;
+  display: flex;
 }
 .wrap .profile {
   width: 250px;
@@ -183,6 +186,112 @@ body {
 }
 .wrap .profile .auth .forgot_password:hover {
   text-decoration: underline;
+}
+.wrap main {
+  width: 750px;
+  height: 600px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #222222;
+  border-radius: 5px;
+}
+.wrap main .palette-wrap {
+  height: 420px;
+  margin-bottom: 5px;
+}
+.wrap main .palette-wrap .palette {
+  width: 500px;
+  height: 300px;
+  margin: 0 auto;
+  position: relative;
+  top: 50%;
+  transform: translate(0, -50%);
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  justify-content: space-evenly;
+}
+.wrap main .color-value-panel {
+  height: 220px;
+  display: flex;
+}
+.wrap main .color-value-panel .manual {
+  width: 430px;
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+.wrap main .color-value-panel .manual .color-wrap {
+  font-weight: bold;
+  width: 200px;
+  margin: 5px;
+  height: 50px;
+  border: 1px solid #222222;
+  border-radius: 5px;
+  position: relative;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+}
+.wrap main .color-value-panel .manual .color-wrap .color-label {
+  display: inline-block;
+  width: 55px;
+  text-align: center;
+  color: #222222;
+  font-size: 15px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  top: -15px;
+  background-color: #ffffff;
+  cursor: default;
+}
+.wrap main .color-value-panel .manual .color-wrap .color-value {
+  resize: none;
+  outline: none;
+  width: 55px;
+  height: 19px;
+  margin-top: 15px;
+  border: 1px solid #222222;
+  border-radius: 5px;
+  padding: 1px;
+  padding-left: 3px;
+  text-align: center;
+  font-family: sans-serif;
+}
+.wrap main .color-value-panel .manual .color-wrap .cmyk {
+  width: 41px;
+}
+.wrap main .color-value-panel .manual .color-wrap .hex {
+  width: 165px;
+}
+.wrap main .color-value-panel .visual {
+  width: 200px;
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 15px;
+  padding-left: 10px;
+}
+.wrap main .color-value-panel .visual .gradient-box {
+  border: 1px solid #222222;
+  height: 150px;
+  width: 150px;
+}
+.color {
+  border: 1px solid #222222;
+  cursor: pointer;
+  height: 32.333333%;
+  width: 24%;
+}
+.color:hover {
+  border: 2px solid #222222;
+}
+
+.color-selected {
+  border: 2px solid #222222;
+  box-shadow: 0 0 2px #222222;
 }
 
 /*# sourceMappingURL=style.css.map */
