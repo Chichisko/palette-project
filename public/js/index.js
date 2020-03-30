@@ -17,7 +17,7 @@ $(() => {
 			updatePaletteCell(rgbArray);
 		});
 		$(colorInput).on('change', (event) => {
-			updateColorValuePanel(rgbArray);
+			updateColoredPanel(rgbArray);
 		});
 	}
 	const cmyk = $('#cmyk').children('.color-value');
@@ -30,11 +30,35 @@ $(() => {
 			updatePaletteCell(rgbArray);
 		});
 		$(colorInput).on('change', (event) => {			
-			updateColorValuePanel(rgbArray);
+			updateColoredPanel(rgbArray);
 		});
 	}
 	const hsv = $('#hsv').children('.color-value');
+	for(let colorInput of hsv) {
+		let rgbArray;
+		let hsvArray;
+		$(colorInput).on('input', (event) => {
+			hsvArray = [$(hsv[0]).val(), $(hsv[1]).val(), $(hsv[2]).val()];
+			rgbArray = hsvToRgb(hsvArray);
+			updatePaletteCell(rgbArray);
+		});
+		$(colorInput).on('change', (event) => {			
+			updateColoredPanel(rgbArray);
+		});
+	}
 	const hsl = $('#hsl').children('.color-value');
+	for(let colorInput of hsl) {
+		let rgbArray;
+		let hslArray;
+		$(colorInput).on('input', (event) => {
+			hslArray = [$(hsl[0]).val(), $(hsl[1]).val(), $(hsl[2]).val()];
+			rgbArray = hslToRgb(hslArray);
+			updatePaletteCell(rgbArray);
+		});
+		$(colorInput).on('change', (event) => {			
+			updateColoredPanel(rgbArray);
+		});
+	}
 	const hex = $('#hex').children('.color-value');
 	for(let colorInput of hex) {		
 		
@@ -44,19 +68,160 @@ $(() => {
 			if($(hex[0]).val().slice(0,1) != '#'){
 				hexString = '#' + hexString.slice(0,6);
 			}
-			let rValue = parseInt(hexString.slice(1,3), 16);
-			let gValue = parseInt(hexString.slice(3,5), 16);
-			let bValue = parseInt(hexString.slice(5,7), 16);
-			rgbArray = [rValue, gValue, bValue];
+			let red = parseInt(hexString.slice(1,3), 16);
+			let green = parseInt(hexString.slice(3,5), 16);
+			let blue = parseInt(hexString.slice(5,7), 16);
+			rgbArray = [red, green, blue];
 			updatePaletteCell(rgbArray);
 		});
 		$(colorInput).on('change', (event) => {
-			updateColorValuePanel(rgbArray);
+			updateColoredPanel(rgbArray);
 		});
 	}
-	const lab = $('#lab').children('.color-value');
+	//const lab = $('#lab').children('.color-value');
+	$('#rgb .color-value').on('mousewheel', (event) => {
+		if(event.originalEvent.wheelDelta / 120 > 0) {
+			if($(event.target).val() >= 250) {
+				$(event.target).val(255);
+				$(event.target).trigger('input');
+				$(event.target).trigger('change');
+				return;
+			}
+			$(event.target).val(parseInt($(event.target).val()) + 5);
+			$(event.target).trigger('input');
+			$(event.target).trigger('change');
+		} else {
+			if($(event.target).val() <= 5) {
+				$(event.target).val(0);
+				$(event.target).trigger('input');
+				$(event.target).trigger('change');
+				return;
+			}
+			$(event.target).val(parseInt($(event.target).val()) - 5);
+			$(event.target).trigger('input');
+			$(event.target).trigger('change');
+		}
+	});
+	$('#hsv .color-value').on('mousewheel', (event) => {
+		if(event.originalEvent.wheelDelta / 120 > 0) {
+			if(event.target.id == "hsv-h") {
+				if($(event.target).val() >= 355) {
+					$(event.target).val(0);
+					$(event.target).trigger('input');
+					$(event.target).trigger('change');
+					return;
+				}
+				$(event.target).val(parseInt($(event.target).val()) + 5);
+				$(event.target).trigger('input');
+				$(event.target).trigger('change');				
+				return;
+			}
+			if($(event.target).val() >= 95) {
+				$(event.target).val(100);
+				$(event.target).trigger('input');
+				$(event.target).trigger('change');
+				return;
+			}
+			$(event.target).val(parseInt($(event.target).val()) + 5);
+			$(event.target).trigger('input');
+			$(event.target).trigger('change');
+		} else {
+			if(event.target.id == "hsv-h") {
+				if($(event.target).val() < 5) {
+					$(event.target).val(355);
+					$(event.target).trigger('input');
+					$(event.target).trigger('change');
+					return;
+				}
+				$(event.target).val(parseInt($(event.target).val()) - 5);
+				$(event.target).trigger('input');
+				$(event.target).trigger('change');			
+				return;
+			}
+			if($(event.target).val() <= 5) {
+				$(event.target).val(0);
+				$(event.target).trigger('input');
+				$(event.target).trigger('change');
+				return;
+			}
+			$(event.target).val(parseInt($(event.target).val()) - 5);
+			$(event.target).trigger('input');
+			$(event.target).trigger('change');
+		}
+	});
+	$('#hsl .color-value').on('mousewheel', (event) => {
+		if(event.originalEvent.wheelDelta / 120 > 0) {
+			if(event.target.id == "hsl-h") {
+				if($(event.target).val() >= 355) {
+					$(event.target).val(0);
+					$(event.target).trigger('input');
+					$(event.target).trigger('change');
+					return;
+				}
+				$(event.target).val(parseInt($(event.target).val()) + 5);
+				$(event.target).trigger('input');
+				$(event.target).trigger('change');				
+				return;
+			}
+			if($(event.target).val() >= 95) {
+				$(event.target).val(100);
+				$(event.target).trigger('input');
+				$(event.target).trigger('change');
+				return;
+			}
+			$(event.target).val(parseInt($(event.target).val()) + 5);
+			$(event.target).trigger('input');
+			$(event.target).trigger('change');
+		} else {
+			if(event.target.id == "hsl-h") {
+				if($(event.target).val() < 5) {
+					$(event.target).val(355);
+					$(event.target).trigger('input');
+					$(event.target).trigger('change');
+					return;
+				}
+				$(event.target).val(parseInt($(event.target).val()) - 5);
+				$(event.target).trigger('input');
+				$(event.target).trigger('change');			
+				return;
+			}
+			if($(event.target).val() <= 5) {
+				$(event.target).val(0);
+				$(event.target).trigger('input');
+				$(event.target).trigger('change');
+				return;
+			}
+			$(event.target).val(parseInt($(event.target).val()) - 5);
+			$(event.target).trigger('input');
+			$(event.target).trigger('change');
+		}
+	});
+	$('#cmyk .color-value').on('mousewheel', (event) => {
+		if(event.originalEvent.wheelDelta / 120 > 0) {
+			if($(event.target).val() >= 95) {
+				$(event.target).val(100);
+				$(event.target).trigger('input');
+				$(event.target).trigger('change');
+				return;
+			}
+			$(event.target).val(parseInt($(event.target).val()) + 5);
+			$(event.target).trigger('input');
+			$(event.target).trigger('change');
+		} else {
+			if($(event.target).val() <= 5) {
+				$(event.target).val(0);
+				$(event.target).trigger('input');
+				$(event.target).trigger('change');
+				return;
+			}
+			$(event.target).val(parseInt($(event.target).val()) - 5);
+			$(event.target).trigger('input');
+			$(event.target).trigger('change');
+		}
+	});
+
 	let currentCell = $('.color-selected');
-	updateColorValuePanel();
+	updateColoredPanel();
 
 	let registrationClose;
 
@@ -207,9 +372,9 @@ $(() => {
 			$(palette[i]).removeClass("color-selected");
 		}
 		currentCell.addClass("color-selected");
-		updateColorValuePanel();
+		updateColoredPanel();
 	}
-	function updateColorValuePanel() {
+	function updateColoredPanel() {
 		let currentColor = createRgbArrayFromCell(currentCell);
 		updateHex(currentColor);
 		updateRgb(currentColor);
@@ -226,42 +391,198 @@ $(() => {
 		return rgbString.split(', ');
 	}
 	function updateHex(rgbArray) {
-		let rValue = parseInt(rgbArray[0]).toString(16);
-		let gValue = parseInt(rgbArray[1]).toString(16);
-		let bValue = parseInt(rgbArray[2]).toString(16);
+		let red = parseInt(rgbArray[0]).toString(16);
+		let green = parseInt(rgbArray[1]).toString(16);
+		let blue = parseInt(rgbArray[2]).toString(16);
 
-		if(rValue.length < 2) {
-			rValue = '0' + rValue;
+		if(red.length < 2) {
+			red = '0' + red;
 		}
-		if(gValue.length < 2) {
-			gValue = '0' + gValue;
+		if(green.length < 2) {
+			green = '0' + green;
 		}
-		if(bValue.length < 2) {
-			bValue = '0' + bValue;
+		if(blue.length < 2) {
+			blue = '0' + blue;
 		}
 
-		let hexValue = rValue + gValue + bValue;
+		let hexValue = red + green + blue;
 		$(hex[0]).val('#' + hexValue);
 
 	}
 	function updateRgb(rgbArray) {
-		let rValue = parseInt(rgbArray[0]);
-		let gValue = parseInt(rgbArray[1]);
-		let bValue = parseInt(rgbArray[2]);
+		let red = parseInt(rgbArray[0]);
+		let green = parseInt(rgbArray[1]);
+		let blue = parseInt(rgbArray[2]);
 
-		$(rgb[0]).val(rValue);
-		$(rgb[1]).val(gValue);
-		$(rgb[2]).val(bValue);
+		$(rgb[0]).val(red);
+		$(rgb[1]).val(green);
+		$(rgb[2]).val(blue);
 	}
 	function updateHsv(rgbArray) {
-		let rValue = parseInt(rgbArray[0]);
-		let gValue = parseInt(rgbArray[1]);
-		let bValue = parseInt(rgbArray[2]);
+		let hsvArray = rgbToHsv(rgbArray);
+
+		$(hsv[0]).val(hsvArray[0]);
+		$(hsv[1]).val(hsvArray[1]);
+		$(hsv[2]).val(hsvArray[2]);
+	}
+	function rgbToHsv(rgbArray) {
+		let red = parseInt(rgbArray[0]) / 2.55;
+		let green = parseInt(rgbArray[1]) / 2.55;
+		let blue = parseInt(rgbArray[2]) / 2.55;
+
+		let max = Math.max(red, green, blue);
+		let min = Math.min(red, green, blue);
+		let diff = max - min;
+
+		let hue = 0;
+		if(diff == 0) {
+			hue = 0;
+		} 
+		else if(max == red) {
+			hue = Math.round(60 * ((green - blue) / diff % 6) % 360); 
+		} 
+		else if(max == green) {
+			hue = Math.round(60 * ((blue - red) / diff + 2) % 360);
+		} 
+		else if(max == blue) {
+			hue = Math.round(60 * ((red - green) / diff + 4) % 360);
+		}
+		if(hue < 0) {
+			hue += 360;
+		}
+
+		let saturation = 0;
+		if(max == 0) {
+			saturation = 0;
+		} else {
+			saturation =  Math.round(diff / max * 100);
+		}
+
+		let value = Math.round(max);
+
+		let hsvArray = [hue, saturation, value];
+		return hsvArray;
+	}
+	function hsvToRgb(hsvArray) {
+		let hue = hsvArray[0];
+		if(hue >= 360 || hue < 0) {
+			hue = 0;
+		}
+		let saturation = hsvArray[1] / 100;
+		let value = hsvArray[2] / 100;
+
+		let colorX = value * saturation;
+		let colorY = colorX * (1 - Math.abs(hue / 60 % 2 - 1));
+		let coef = value - colorX;
+
+		let rgbArray = [];
+		if(hue >= 0 && hue < 60) {
+			rgbArray = [colorX, colorY, 0];
+		} 
+		else if(hue >= 60 && hue < 120) {
+			rgbArray = [colorY, colorX, 0];
+		} 
+		else if(hue >= 120 && hue < 180) {
+			rgbArray = [0, colorX, colorY];
+		} 
+		else if(hue >= 180 && hue < 240) {
+			rgbArray = [0, colorY, colorX];
+		}
+		else if(hue >= 240 && hue < 300) {
+			rgbArray = [colorY, 0, colorX];
+		} 
+		else if(hue >= 300 && hue < 360) {
+			rgbArray = [colorX, 0, colorY];
+		}
+
+		rgbArray[0] = Math.round((rgbArray[0] + coef) * 255);
+		rgbArray[1] = Math.round((rgbArray[1] + coef) * 255);
+		rgbArray[2] = Math.round((rgbArray[2] + coef) * 255);
+
+		return rgbArray;
 	}
 	function updateHsl(rgbArray) {
-		let rValue = parseInt(rgbArray[0]);
-		let gValue = parseInt(rgbArray[1]);
-		let bValue = parseInt(rgbArray[2]);
+		let hslArray = rgbToHsl(rgbArray);
+
+		$(hsl[0]).val(hslArray[0]);
+		$(hsl[1]).val(hslArray[1]);
+		$(hsl[2]).val(hslArray[2]);
+	}
+	function rgbToHsl(rgbArray) {
+		let red = parseInt(rgbArray[0]) / 2.55;
+		let green = parseInt(rgbArray[1]) / 2.55;
+		let blue = parseInt(rgbArray[2]) / 2.55;
+
+		let max = Math.max(red, green, blue);
+		let min = Math.min(red, green, blue);
+		let diff = max - min;
+
+		let hue = 0;
+		if(diff == 0) {
+			hue = 0;
+		} 
+		else if(max == red) {
+			hue = Math.round(60 * ((green - blue) / diff % 6) % 360); 
+		} 
+		else if(max == green) {
+			hue = Math.round(60 * ((blue - red) / diff + 2) % 360);
+		} 
+		else if(max == blue) {
+			hue = Math.round(60 * ((red - green) / diff + 4) % 360);
+		}
+		if(hue < 0) {
+			hue += 360;
+		}
+
+		let lightness = Math.round((max + min) / 2);
+
+		let saturation = 0;
+		if(diff == 0) {
+			saturation = 0;
+		} else {
+			saturation =  Math.round(diff / (100 - Math.abs(2 * lightness - 100)) * 100);
+		}
+
+		let hslArray = [hue, saturation, lightness];
+		return hslArray;
+	}
+	function hslToRgb(hslArray) {
+		let hue = hslArray[0];
+		if(hue >= 360 || hue < 0) {
+			hue = 0;
+		}
+		let saturation = hslArray[1] / 100;
+		let lightness = hslArray[2] / 100;
+
+		let colorX = (1 - Math.abs(2 * lightness - 1)) * saturation;
+		let colorY = colorX * (1 - Math.abs(hue / 60 % 2 - 1));
+		let coef = lightness - colorX / 2;
+
+		let rgbArray = [];
+		if(hue >= 0 && hue < 60) {
+			rgbArray = [colorX, colorY, 0];
+		} 
+		else if(hue >= 60 && hue < 120) {
+			rgbArray = [colorY, colorX, 0];
+		} 
+		else if(hue >= 120 && hue < 180) {
+			rgbArray = [0, colorX, colorY];
+		} 
+		else if(hue >= 180 && hue < 240) {
+			rgbArray = [0, colorY, colorX];
+		}
+		else if(hue >= 240 && hue < 300) {
+			rgbArray = [colorY, 0, colorX];
+		} 
+		else if(hue >= 300 && hue < 360) {
+			rgbArray = [colorX, 0, colorY];
+		}
+
+		rgbArray[0] = Math.round((rgbArray[0] + coef) * 255);
+		rgbArray[1] = Math.round((rgbArray[1] + coef) * 255);
+		rgbArray[2] = Math.round((rgbArray[2] + coef) * 255);
+
+		return rgbArray;
 	}
 	function updateCmyk(rgbArray) {
 		cmykArray = rgbToCmyk(rgbArray);
@@ -272,16 +593,16 @@ $(() => {
 		$(cmyk[3]).val(cmykArray[3]);
 	}
 	function rgbToCmyk(rgbArray) {
-		let rValue = Math.round(parseInt(rgbArray[0]) / 2.55);
-		let gValue = Math.round(parseInt(rgbArray[1]) / 2.55);
-		let bValue = Math.round(parseInt(rgbArray[2]) / 2.55);
+		let red = Math.round(parseInt(rgbArray[0]) / 2.55);
+		let green = Math.round(parseInt(rgbArray[1]) / 2.55);
+		let blue = Math.round(parseInt(rgbArray[2]) / 2.55);
 
-		let blackValue = Math.round(100 - Math.max(rValue, gValue, bValue));
-		let cValue = Math.round((100 - rValue - blackValue) / (100 - blackValue) * 100);
-		let mValue = Math.round((100 - gValue - blackValue) / (100 - blackValue) * 100);
-		let yValue = Math.round((100 - bValue - blackValue) / (100 - blackValue) * 100);		
+		let black = Math.round(100 - Math.max(red, green, blue));
+		let cyan = Math.round((100 - red - black) / (100 - black) * 100);
+		let magneta = Math.round((100 - green - black) / (100 - black) * 100);
+		let yellow = Math.round((100 - blue - black) / (100 - black) * 100);		
 
-		let cmykArray = [cValue, mValue, yValue, blackValue];
+		let cmykArray = [cyan, magneta, yellow, black];
 		for(let i = 0; i < 3; i++) {
 			if(cmykArray[i] !== cmykArray[i] || cmykArray[i] < 0) {
 				cmykArray[i] = 0;
@@ -290,39 +611,39 @@ $(() => {
 		return cmykArray;
 	}
 	function cmykToRgb(cmykArray) {
-		let cValue = parseInt(cmykArray[0]);
-		let mValue = parseInt(cmykArray[1]);
-		let yValue = parseInt(cmykArray[2]);
-		let blackValue = parseInt(cmykArray[3]);
+		let cyan = parseInt(cmykArray[0]);
+		let magneta = parseInt(cmykArray[1]);
+		let yellow = parseInt(cmykArray[2]);
+		let black = parseInt(cmykArray[3]);
 
-		let rValue = Math.round(2.55 * (100 - cValue) * (100 - blackValue) / 100);
-		let gValue = Math.round(2.55 * (100 - mValue) * (100 - blackValue) / 100);
-		let bValue = Math.round(2.55 * (100 - yValue) * (100 - blackValue) / 100);
+		let red = Math.round(2.55 * (100 - cyan) * (100 - black) / 100);
+		let green = Math.round(2.55 * (100 - magneta) * (100 - black) / 100);
+		let blue = Math.round(2.55 * (100 - yellow) * (100 - black) / 100);
 
-		let rgbArray = [rValue, gValue, bValue];
+		let rgbArray = [red, green, blue];
 		return rgbArray;
 	}
 	function updateLab(rgbArray) {
-		let rValue = parseInt(rgbArray[0]);
-		let gValue = parseInt(rgbArray[1]);
-		let bValue = parseInt(rgbArray[2]);
+		let red = parseInt(rgbArray[0]);
+		let green = parseInt(rgbArray[1]);
+		let blue = parseInt(rgbArray[2]);
 	}
 	function updatePaletteCell(rgbArray) {
-		let rValue = parseInt(rgbArray[0]).toString(16);;
-		let gValue = parseInt(rgbArray[1]).toString(16);;
-		let bValue = parseInt(rgbArray[2]).toString(16);;
+		let red = parseInt(rgbArray[0]).toString(16);;
+		let green = parseInt(rgbArray[1]).toString(16);;
+		let blue = parseInt(rgbArray[2]).toString(16);;
 
-		if(rValue.length < 2) {
-			rValue = '0' + rValue;
+		if(red.length < 2) {
+			red = '0' + red;
 		}
-		if(gValue.length < 2) {
-			gValue = '0' + gValue;
+		if(green.length < 2) {
+			green = '0' + green;
 		}
-		if(bValue.length < 2) {
-			bValue = '0' + bValue;
+		if(blue.length < 2) {
+			blue = '0' + blue;
 		}
 
-		let hexValue = '#' + rValue + gValue + bValue;
+		let hexValue = '#' + red + green + blue;
 		$(currentCell).css('background-color', hexValue);
 	}
 });
