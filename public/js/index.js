@@ -18,6 +18,7 @@ $(() => {
 		});
 		$(colorInput).on('change', (event) => {
 			updateColoredPanel(rgbArray);
+			let paletteKey = generatePaletteKey();
 		});
 	}
 	const cmyk = $('#cmyk').children('.color-value');
@@ -31,6 +32,7 @@ $(() => {
 		});
 		$(colorInput).on('change', (event) => {			
 			updateColoredPanel(rgbArray);
+			let paletteKey = generatePaletteKey();
 		});
 	}
 	const hsv = $('#hsv').children('.color-value');
@@ -44,6 +46,7 @@ $(() => {
 		});
 		$(colorInput).on('change', (event) => {			
 			updateColoredPanel(rgbArray);
+			let paletteKey = generatePaletteKey();
 		});
 	}
 	const hsl = $('#hsl').children('.color-value');
@@ -57,6 +60,7 @@ $(() => {
 		});
 		$(colorInput).on('change', (event) => {			
 			updateColoredPanel(rgbArray);
+			let paletteKey = generatePaletteKey();
 		});
 	}
 	const hex = $('#hex').children('.color-value');
@@ -76,6 +80,7 @@ $(() => {
 		});
 		$(colorInput).on('change', (event) => {
 			updateColoredPanel(rgbArray);
+			let paletteKey = generatePaletteKey();
 		});
 	}
 	//const lab = $('#lab').children('.color-value');
@@ -391,6 +396,10 @@ $(() => {
 		return rgbString.split(', ');
 	}
 	function updateHex(rgbArray) {
+		let hexValue = rgbToHex(rgbArray);
+		$(hex[0]).val('#' + hexValue);
+	}
+	function rgbToHex(rgbArray) {
 		let red = parseInt(rgbArray[0]).toString(16);
 		let green = parseInt(rgbArray[1]).toString(16);
 		let blue = parseInt(rgbArray[2]).toString(16);
@@ -406,8 +415,7 @@ $(() => {
 		}
 
 		let hexValue = red + green + blue;
-		$(hex[0]).val('#' + hexValue);
-
+		return hexValue;
 	}
 	function updateRgb(rgbArray) {
 		let red = parseInt(rgbArray[0]);
@@ -534,7 +542,7 @@ $(() => {
 			hue += 360;
 		}
 
-		let lightness = Math.round((max + min) / 2);
+		let lightness = (max + min) / 2;
 
 		let saturation = 0;
 		if(diff == 0) {
@@ -542,6 +550,8 @@ $(() => {
 		} else {
 			saturation =  Math.round(diff / (100 - Math.abs(2 * lightness - 100)) * 100);
 		}
+		lightness = Math.round(lightness);
+
 
 		let hslArray = [hue, saturation, lightness];
 		return hslArray;
@@ -645,5 +655,25 @@ $(() => {
 
 		let hexValue = '#' + red + green + blue;
 		$(currentCell).css('background-color', hexValue);
+	}
+	function generatePaletteKey() {
+		let palette = $('#palette .color');
+		let numCell = palette.length;
+
+		let paletteKey = '';
+		for(let i = 0; i < numCell; i++) {
+			let thisCell = $(palette[i]); 
+			let thisColorRgbArray = createRgbArrayFromCell(thisCell);
+			let thisColor = rgbToHex(thisColorRgbArray);
+			paletteKey = paletteKey + thisColor;
+		}
+		if(numCell < 16) {
+			numCell = '0' + parseInt(numCell).toString(16);
+		} else {			
+			numCell = parseInt(numCell).toString(16);
+		}
+
+		paletteKey = numCell + paletteKey;
+
 	}
 });
