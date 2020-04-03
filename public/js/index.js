@@ -2,8 +2,29 @@ $(() => {
 	const login = $('#login');
 	const password = $('#password');
 	const loginButton = $('#login_button');
+	loginButton.click(() => {
+		let data = {
+			login: login.val(),
+			password: password.val()
+		}
+		$.ajax({
+				url: '/login',
+				type: 'POST',
+				dataType: 'json',
+				data: data,
+				error: (xmlHttp, status, errorThrown) => {
+					console.log(xmlHttp);
+				}
+			}).done((data) => {
+			if(data.error) {
+				alert(data.error);
+			} else {
+				console.log(data);
+				setTimeout(() => {window.location.href = '/';}, 1000);
+			}
+		})
+	});
 	const registrationFormButton = $('#registration_form_button');
-	console.log()
 
 	let palette = $("#palette").children();
 	for(let i = 0; i < palette.length; i++) {
@@ -274,29 +295,30 @@ $(() => {
 
 	function sendRegistrationForm() {
 		if(checkForm()) {
-			   let data = {
-			 name: $('#name_reg').val(),
-			 login: $('#login_reg').val(),
-			 mail: $('#mail_reg').val(),
-			 password: $('#password_reg').val(),
-			   };
-			   $.ajax({
-			 url: '/registration',
-			 type: 'POST',
-			 dataType: 'json',
-			 data: data,
-			 error: (xmlHttp, status, errorThrown) => {
-			  alert('Request error: ' + status); //very bad style
-			 }
-			   }).done((data) => {
-			 if(data.error) {
-			  registrationLogin.css('background-color', '#f003');
-				showFormError('Логин уже используется');
-			 } else {
-			  showRegistrationMessage();
-			  setTimeout(() => {window.location.href = '/';}, 1000);
-			 }
-			   })
+			let data = {
+				name: $('#name_reg').val(),
+				login: $('#login_reg').val(),
+				mail: $('#mail_reg').val(),
+				password: $('#password_reg').val(),
+			};
+			$.ajax({
+				url: '/registration',
+				type: 'POST',
+				dataType: 'json',
+				data: data,
+				error: (xmlHttp, status, errorThrown) => {
+					console.log(xmlHttp);
+				}
+			}).done((data) => {
+			if(data.error) {
+				console.log(data.error);
+				registrationLogin.css('background-color', '#f003');
+				showFormError(data.error);
+			} else {
+				showRegistrationMessage();
+				setTimeout(() => {window.location.href = '/';}, 1000);
+				}
+			})
 		}
 	}
 
