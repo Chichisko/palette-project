@@ -107,7 +107,7 @@ app.post('/login', (req, res) => {
 				mail: result.mail
 			};
 			return res.status(201).send({
-				message: 'User is authorized'
+				message: 'User is login'
 			});	
 		} else {
 			return res.status(400).send({
@@ -116,10 +116,29 @@ app.post('/login', (req, res) => {
 		}	
 	})
 });
-app.post('/quit', (req, res) => {
+app.post('/logout', (req, res) => {
 	req.session.user = null;
 	return res.status(201).send({
-		message: 'User is authorized'
+		message: 'User is logout'
+	});
+});
+app.post('/saveOpenedPalette', (req, res) => {
+	req.session.paletteKey = req.body.paletteKey;
+	res.status(201).send({
+		message: 'Opened palette saved'
+	});
+	console.log(req.body);
+});
+app.post('/loadOpenedPalette', (req, res) => {
+	if(req.session.paletteKey) {
+		let paletteKey = req.session.paletteKey;
+		res.status(201).send({
+			message: 'Opened palette loaded',
+			paletteKey: paletteKey
+		});
+	}
+	res.status(400).send({
+		error: 'Palette does not exist'
 	});
 });
 app.listen(config.server.port, () => {

@@ -6,7 +6,7 @@ $(() => {
 		let data = {
 			login: login.val(),
 			password: password.val()
-		}
+		};
 		$.ajax({
 				url: '/login',
 				type: 'POST',
@@ -19,7 +19,27 @@ $(() => {
 			if(data.error) {
 				alert(data.error);
 			} else {
-				console.log(data);
+				console.log(data.message);
+				setTimeout(() => {window.location.href = '/';}, 1000);
+			}
+		})
+	});
+	const logoutButton = $('#logout_button');
+	logoutButton.click(() => {
+		let data = {};
+		$.ajax({
+				url: '/logout',
+				type: 'POST',
+				dataType: 'json',
+				data: data,
+				error: (xmlHttp, status, errorThrown) => {
+					console.log(xmlHttp);
+				}
+			}).done((data) => {
+			if(data.error) {
+				alert(data.error);
+			} else {
+				console.log(data.message);
 				setTimeout(() => {window.location.href = '/';}, 1000);
 			}
 		})
@@ -38,8 +58,7 @@ $(() => {
 			updatePaletteCell(rgbArray);
 		});
 		$(colorInput).on('change', (event) => {
-			updateColoredPanel(rgbArray);
-			let paletteKey = generatePaletteKey();
+			saveColor(currentCell);
 		});
 	}
 	const cmyk = $('#cmyk').children('.color-value');
@@ -52,8 +71,7 @@ $(() => {
 			updatePaletteCell(rgbArray);
 		});
 		$(colorInput).on('change', (event) => {			
-			updateColoredPanel(rgbArray);
-			let paletteKey = generatePaletteKey();
+			saveColor(currentCell);
 		});
 	}
 	const hsv = $('#hsv').children('.color-value');
@@ -66,8 +84,7 @@ $(() => {
 			updatePaletteCell(rgbArray);
 		});
 		$(colorInput).on('change', (event) => {			
-			updateColoredPanel(rgbArray);
-			let paletteKey = generatePaletteKey();
+			saveColor(currentCell);
 		});
 	}
 	const hsl = $('#hsl').children('.color-value');
@@ -80,8 +97,7 @@ $(() => {
 			updatePaletteCell(rgbArray);
 		});
 		$(colorInput).on('change', (event) => {			
-			updateColoredPanel(rgbArray);
-			let paletteKey = generatePaletteKey();
+			saveColor(currentCell);
 		});
 	}
 	const hex = $('#hex').children('.color-value');
@@ -100,11 +116,9 @@ $(() => {
 			updatePaletteCell(rgbArray);
 		});
 		$(colorInput).on('change', (event) => {
-			updateColoredPanel(rgbArray);
-			let paletteKey = generatePaletteKey();
+			saveColor(currentCell);
 		});
 	}
-	//const lab = $('#lab').children('.color-value');
 	$('#rgb .color-value').on('mousewheel', (event) => {
 		if(event.originalEvent.wheelDelta / 120 > 0) {
 			if($(event.target).val() >= 250) {
@@ -246,8 +260,11 @@ $(() => {
 		}
 	});
 
+	loadOpenedPalette();
 	let currentCell = $('.color-selected');
-	updateColoredPanel();
+	if(currentCell) {
+		updateColorPanel(currentCell);
+	}
 
 	let registrationClose;
 
@@ -364,7 +381,6 @@ $(() => {
 			   registrationLogin.css('background-color', '#f003');
 			   showFormError('Введите логин');
 		}
-		//check login for uniqueness
 	}
 
 	function showFormError(message) {
@@ -399,10 +415,10 @@ $(() => {
 			$(palette[i]).removeClass("color-selected");
 		}
 		currentCell.addClass("color-selected");
-		updateColoredPanel();
+		updateColorPanel(currentCell);
 	}
-	function updateColoredPanel() {
-		let currentColor = createRgbArrayFromCell(currentCell);
+	function updateColorPanel(colorCell) {
+		let currentColor = createRgbArrayFromCell(colorCell);
 		updateHex(currentColor);
 		updateRgb(currentColor);
 		updateHsv(currentColor);
@@ -696,6 +712,59 @@ $(() => {
 		}
 
 		paletteKey = numCell + paletteKey;
-
+		return paletteKey;
+	}
+	function saveColor(cell) {
+		updateColorPanel(cell);
+		let paletteKey = generatePaletteKey();
+		saveOpenedPalette(paletteKey);
+	}
+	function saveOpenedPalette(paletteKey) {
+		let key = paletteKey;
+		let data = {
+			paletteKey: key
+		};
+		$.ajax({
+				url: '/saveOpenedPalette',
+				type: 'POST',
+				dataType: 'json',
+				data: data,
+				error: (xmlHttp, status, errorThrown) => {
+					console.log(xmlHttp);
+				}
+			}).done((data) => {
+			if(data.error) {
+				alert(data.error);
+			} else {
+				console.log(data.message);
+			}
+		})
+	}
+	function loadOpenedPalette() {
+		$.ajax({
+				url: '/loadOpenedPalette',
+				type: 'POST',
+				dataType: 'json',
+				data: {},
+				error: (xmlHttp, status, errorThrown) => {
+				}
+			}).done((data) => {
+			if(data.error) {
+				alert(data.error);
+			} else {
+				console.log(data.message);
+				createPaletteFromKey(data.paletteKey);
+			}
+		})
+	}
+	function createPaletteFromKey(paletteKey) {
+		let numCell = parseInt(paletteKey.slice(0, 2), 16);
+		let palette = $('#palette .color');
+		for(let i = 0; i < numCell; i++) {
+			let start = 2 + i * 6;
+			let end = 8 + i * 6;
+			let color = paletteKey.slice(start, end);
+			$(palette[i]).css('background-color', '#' + color);
+		}
 	}
 });
