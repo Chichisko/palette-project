@@ -260,11 +260,13 @@ $(() => {
 		}
 	});
 
-	loadOpenedPalette();
-	let currentCell = $('.color-selected');
-	if(currentCell) {
-		updateColorPanel(currentCell);
-	}
+	let currentCell;
+	loadOpenedPalette(() => {
+		currentCell = $('.color-selected');
+		if(currentCell) {
+			currentCell.trigger('click');
+		}
+	});
 
 	let registrationClose;
 
@@ -740,7 +742,7 @@ $(() => {
 			}
 		})
 	}
-	function loadOpenedPalette() {
+	function loadOpenedPalette(callback) {
 		$.ajax({
 				url: '/loadOpenedPalette',
 				type: 'POST',
@@ -754,6 +756,7 @@ $(() => {
 			} else {
 				console.log(data.message);
 				createPaletteFromKey(data.paletteKey);
+				callback();
 			}
 		})
 	}
