@@ -199,11 +199,13 @@ body {
 .wrap main .palette-wrap {
   height: 420px;
   margin-bottom: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 .wrap main .palette-wrap .palette {
   width: 500px;
   height: 300px;
-  margin: 0 auto;
   position: relative;
   top: 50%;
   transform: translate(0, -50%);
@@ -267,18 +269,90 @@ body {
 .wrap main .color-value-panel .manual .color-wrap .hex {
   width: 165px;
 }
-.wrap main .color-value-panel .visual {
-  width: 200px;
+.wrap main .color-value-panel .palette-buttons {
+  width: 210px;
+  height: 140px;
+  position: relative;
   display: flex;
   flex-wrap: wrap;
-  padding-top: 15px;
-  padding-left: 10px;
+  flex-direction: row;
+  top: 50%;
+  transform: translate(0, -50%);
+  margin: 0 auto;
 }
-.wrap main .color-value-panel .visual .gradient-box {
+.wrap main .color-value-panel .palette-buttons .buttons {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  margin: 5px;
   border: 1px solid #222222;
-  height: 150px;
-  width: 150px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  cursor: pointer;
+  outline: none;
 }
+.wrap main .color-value-panel .palette-buttons .buttons i {
+  font-size: 50px;
+  color: #222222;
+  z-index: 50;
+}
+.wrap main .color-value-panel .palette-buttons .buttons .fa-cog {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  font-size: 35px;
+  color: #222222;
+  z-index: 60;
+}
+.wrap main .color-value-panel .palette-buttons .buttons .fa-table:after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 9px;
+  right: 7px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  z-index: 55;
+}
+.wrap main .color-value-panel .palette-buttons .buttons:hover {
+  box-shadow: 0 0 3px #222222;
+  border: 2px solid #222222;
+}
+.wrap main .color-value-panel .palette-buttons .buttons:hover .fa-cog {
+  bottom: 0px;
+  right: 0px;
+}
+.wrap main .color-value-panel .palette-buttons .buttons:hover .fa-table:after {
+  bottom: 8px;
+  right: 6px;
+}
+.wrap main .color-value-panel .palette-buttons .buttons:active {
+  box-shadow: 0 0 0px #222222;
+  border: 2px solid #222222;
+}
+.wrap main .color-value-panel .palette-buttons .disabled {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  cursor: auto;
+}
+.wrap main .color-value-panel .palette-buttons .disabled i {
+  color: rgba(0, 0, 0, 0.5);
+}
+.wrap main .color-value-panel .palette-buttons .disabled:hover {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  box-shadow: 0 0 0px;
+  cursor: auto;
+}
+.wrap main .color-value-panel .palette-buttons .disabled:active {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  box-shadow: 0 0 0px;
+  cursor: auto;
+}
+
 .color {
   border: 1px solid #222222;
   cursor: pointer;

@@ -118,7 +118,7 @@ app.post('/login', (req, res) => {
 });
 app.post('/logout', (req, res) => {
 	req.session.user = null;
-	return res.status(201).send({
+	res.status(201).send({
 		message: 'User is logout'
 	});
 });
@@ -127,12 +127,11 @@ app.post('/saveOpenedPalette', (req, res) => {
 	res.status(201).send({
 		message: 'Opened palette saved'
 	});
-	console.log(req.body);
 });
 app.post('/loadOpenedPalette', (req, res) => {
 	if(req.session.paletteKey) {
 		let paletteKey = req.session.paletteKey;
-		res.status(201).send({
+		return res.status(201).send({
 			message: 'Opened palette loaded',
 			paletteKey: paletteKey
 		});

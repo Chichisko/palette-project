@@ -238,23 +238,23 @@ $(() => {
 	});
 	$('#cmyk .color-value').on('mousewheel', (event) => {
 		if(event.originalEvent.wheelDelta / 120 > 0) {
-			if($(event.target).val() >= 95) {
+			if($(event.target).val() >= 90) {
 				$(event.target).val(100);
 				$(event.target).trigger('input');
 				$(event.target).trigger('change');
 				return;
 			}
-			$(event.target).val(parseInt($(event.target).val()) + 5);
+			$(event.target).val(parseInt($(event.target).val()) + 10);
 			$(event.target).trigger('input');
 			$(event.target).trigger('change');
 		} else {
-			if($(event.target).val() <= 5) {
+			if($(event.target).val() <= 10) {
 				$(event.target).val(0);
 				$(event.target).trigger('input');
 				$(event.target).trigger('change');
 				return;
 			}
-			$(event.target).val(parseInt($(event.target).val()) - 5);
+			$(event.target).val(parseInt($(event.target).val()) - 10);
 			$(event.target).trigger('input');
 			$(event.target).trigger('change');
 		}
