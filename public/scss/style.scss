@@ -5,7 +5,7 @@ $color_forms_text: #222222;
 $color_forms_bg: #ffffff;
 $color: #222222;
 $color-light: #333333;
-$color-alpha-30: rgba(0, 0, 0, 0.3);
+$color-alpha-20: rgba(0, 0, 0, 0.2);
 $color-alpha-50: rgba(0, 0, 0, 0.5);
 $color-alpha-80: rgba(0, 0, 0, 0.8);
 
@@ -110,9 +110,10 @@ body {
 	max-width: 1300px;
 	margin: 0 auto;
 	display: flex;
+	justify-content: space-between;
 	.profile {
 		width: 250px;
-		margin-left: 10px;
+		margin: 0 10px;
 		.user {
 			width: 150px;
 			display: flex;
@@ -148,6 +149,7 @@ body {
 			flex-direction: column;
 			padding-top: 20px;
 			padding-bottom: 20px;
+			margin: 0 auto;
 			.label {
 				font-weight: bold;
 				font-family: sans-serif;
@@ -208,17 +210,127 @@ body {
 			display: flex;
 			flex-direction: row;
 			justify-content: space-evenly;
+			align-items: flex-start; 
 			.palette {
-				width: 500px;
-				height: 300px;
-				position: relative;
-				top: 50%;
-				transform: translate(0,-50%);
 				display: flex;
 				flex-wrap: wrap;
 				padding: 10px;
-				justify-content: space-evenly;
+				justify-content: center;
+				position: relative;
+				top: 50%;
+				transform: translate(0, -50%);
+				overflow: hidden;
+				.color {
+					cursor: pointer;
+					&:hover {
+						border: 2px solid $color;
+					}
+				}
+				.color-selected {
+					border: 2px solid $color!important;
+					box-shadow: 0 0 2px $color;
+				}
 			}
+			.palette-4 {
+				width: 420px;				
+				max-height: 380px;
+				.color {
+					width: 160px;
+					height: 160px;
+				}
+				.space {
+					border: 1px solid $color;					
+					margin: 5px;
+				}
+			}
+			.palette-6 {
+				width: 530px;				
+				max-height: 380px;
+				.color {
+					width: 160px;
+					height: 160px;
+				}
+				.space {
+					border: 1px solid $color;					
+					margin: 5px;
+				}
+			}
+			.palette-9 {
+				width: 380px;				
+				max-height: 380px;
+				.color {
+					width: 110px;
+					height: 110px;
+				}
+				.space {
+					border: 1px solid $color;					
+					margin: 5px;
+				}
+			}
+			.palette-12 {
+				width: 500px;				
+				max-height: 380px;
+				.color {
+					width: 110px;
+					height: 110px;
+				}
+				.space {
+					border: 1px solid $color;					
+					margin: 5px;
+				}
+			}
+			.palette-16 {
+				width: 380px;
+				max-height: 380px;
+				.color {
+					width: 80px;
+					height: 80px;
+				}
+				.space {
+					border: 1px solid $color;					
+					margin: 5px;
+				}
+			}
+			.palette-20 {
+				width: 470px;
+				max-height: 380px;
+				.color {
+					width: 80px;
+					height: 80px;
+				}
+				.space {
+					border: 1px solid $color;					
+					margin: 5px;
+				}
+			}
+			.palette-25 {
+				width: 380px;
+				max-height: 380px;
+				.color {
+					width: 72px;
+					height: 72px;
+				}
+				.space {
+					border: 1px solid $color;					
+					margin: 5px;
+					width: 62px;
+					height: 62px;					
+				}
+			}
+			.palette-30 {
+				width: 452px;				
+				max-height: 380px;
+				.color {
+					width: 72px;
+					height: 72px;
+				}
+				.space {
+					border: 1px solid $color;					
+					margin: 5px;
+					width: 62px;
+					height: 62px;
+				}
+			}			
 		}
 		.color-value-panel {
 			height: 220px;
@@ -374,17 +486,63 @@ body {
 			// }
 		}
 	}
-}
-.color {
-	border: 1px solid $color;
-	cursor: pointer;
-	height: 32.333333%;
-	width: 24%;
-	&:hover {
-		border: 2px solid $color;
+	.menu {
+		width: 250px;
+		margin: 0 10px;
+		height: 600px;
+		margin-top: 10px;
+		display: flex;
+		flex-direction: column;
+		.menu-headed {
+			width: 100%;
+			height: 50px;
+			background-color: $color;
+			color: $color-btn-text;
+			border-radius: 5px 5px 0 0;
+			text-align: center;
+			font-size: 20px;
+			font-weight: bold;
+			padding-top: 10px;
+		}
+		.palette-container {
+			border-left: 1px solid $color;			
+			border-right: 1px solid $color;
+			height: 500px;			
+			overflow-y: scroll;
+			overflow-x: hidden;
+			overflow-scrolling: touch;
+			&::-webkit-scrollbar {
+				-webkit-appearance: none;
+				width: 10px;
+				background-color: $color-alpha-20;
+			}
+			&::-webkit-scrollbar-thumb {
+				border-radius: 5px;
+				background-color: $color;
+			}
+			.saved-palette {
+				height: 107px;
+				width: 182px;
+				border: 1px solid $color;
+				margin: 10px 30px;
+				display: flex;
+				flex-wrap: wrap;
+				cursor: pointer;
+				.color-cell {
+					width: 45px;
+					height: 35px;
+				}
+				&:hover {
+					border: 1px solid $color;
+					box-shadow: 0 0 5px $color;
+				}
+			}
+		}
+		.menu-footer {
+			width: 100%;
+			height: 50px;
+			border: 1px solid $color;
+			border-radius: 0 0 5px 5px;
+		}
 	}
-}
-.color-selected {
-	border: 2px solid $color;
-	box-shadow: 0 0 2px $color;
 }

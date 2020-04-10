@@ -122,13 +122,13 @@ app.post('/logout', (req, res) => {
 		message: 'User is logout'
 	});
 });
-app.post('/saveOpenedPalette', (req, res) => {
+app.post('/saveCurrentPalette', (req, res) => {
 	req.session.paletteKey = req.body.paletteKey;
 	res.status(201).send({
 		message: 'Opened palette saved'
 	});
 });
-app.post('/loadOpenedPalette', (req, res) => {
+app.post('/loadLastPalette', (req, res) => {
 	if(req.session.paletteKey) {
 		let paletteKey = req.session.paletteKey;
 		return res.status(201).send({

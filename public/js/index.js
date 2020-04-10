@@ -46,10 +46,19 @@ $(() => {
 	});
 	const registrationFormButton = $('#registration_form_button');
 
-	let palette = $("#palette").children();
+	let palette = $('#palette').children();
 	for(let i = 0; i < palette.length; i++) {
 		$(palette[i]).click(selectColor);
 	}
+	const space = $('#space');
+	space.click(clearSelection);
+	let paletteHover = false;
+	$('#palette').hover(() => {
+		paletteHover = true;
+	}, () => {
+		paletteHover = false;
+	});
+
 	const rgb = $('#rgb').children('.color-value');
 	for(let colorInput of rgb) {
 		let rgbArray;		
@@ -119,6 +128,16 @@ $(() => {
 			saveColor(currentCell);
 		});
 	}
+
+	const collapseButton = $('#collapse_button');
+	collapseButton.click(() => {
+		for(let cell of palette) {
+			$(cell).toggleClass('space');
+		}
+		collapseButton.find(':first-child').toggleClass('fa-compress');
+		collapseButton.find(':first-child').toggleClass('fa-expand');
+	});
+
 	$('#rgb .color-value').on('mousewheel', (event) => {
 		if(event.originalEvent.wheelDelta / 120 > 0) {
 			if($(event.target).val() >= 250) {
@@ -261,7 +280,7 @@ $(() => {
 	});
 
 	let currentCell;
-	loadOpenedPalette(() => {
+	loadLastPalette(() => {
 		currentCell = $('.color-selected');
 		if(currentCell) {
 			currentCell.trigger('click');
@@ -410,7 +429,6 @@ $(() => {
 		box.css('background-color', '#fff');
 	}
 
-
 	function selectColor() {
 		currentCell = $(this);
 		for(let i = 0; i < palette.length; i++) {
@@ -419,15 +437,27 @@ $(() => {
 		currentCell.addClass("color-selected");
 		updateColorPanel(currentCell);
 	}
+	function clearSelection() {
+		if(paletteHover) {
+			return;
+		}
+		currentCell = null;
+		for(let i = 0; i < palette.length; i++) {
+			$(palette[i]).removeClass("color-selected");
+		}		
+		updateColorPanel(currentCell);
+	}
 	function updateColorPanel(colorCell) {
-		let currentColor = createRgbArrayFromCell(colorCell);
-		updateHex(currentColor);
-		updateRgb(currentColor);
-		updateHsv(currentColor);
-		updateHsl(currentColor);
-		updateCmyk(currentColor);
-		updateLab(currentColor);
-
+		if(colorCell) {
+			let currentColor = createRgbArrayFromCell(colorCell);
+			updateHex(currentColor);
+			updateRgb(currentColor);
+			updateHsv(currentColor);
+			updateHsl(currentColor);
+			updateCmyk(currentColor);
+		} else {
+			clearAll();
+		}	
 	}
 	function createRgbArrayFromCell(cell) {
 		let rgbString = cell.css('background-color');
@@ -673,10 +703,25 @@ $(() => {
 		let rgbArray = [red, green, blue];
 		return rgbArray;
 	}
-	function updateLab(rgbArray) {
-		let red = parseInt(rgbArray[0]);
-		let green = parseInt(rgbArray[1]);
-		let blue = parseInt(rgbArray[2]);
+	function clearAll() {
+		$(rgb[0]).val('');
+		$(rgb[1]).val('');
+		$(rgb[2]).val('');
+
+		$(cmyk[0]).val('');
+		$(cmyk[1]).val('');
+		$(cmyk[2]).val('');
+		$(cmyk[3]).val('');
+
+		$(hsv[0]).val('');
+		$(hsv[1]).val('');
+		$(hsv[2]).val('');
+
+		$(hsl[0]).val('');
+		$(hsl[1]).val('');
+		$(hsl[2]).val('');
+
+		$(hex[0]).val('');
 	}
 	function updatePaletteCell(rgbArray) {
 		let red = parseInt(rgbArray[0]).toString(16);;
@@ -719,15 +764,15 @@ $(() => {
 	function saveColor(cell) {
 		updateColorPanel(cell);
 		let paletteKey = generatePaletteKey();
-		saveOpenedPalette(paletteKey);
+		saveCurrentPalette(paletteKey);
 	}
-	function saveOpenedPalette(paletteKey) {
+	function saveCurrentPalette(paletteKey) {
 		let key = paletteKey;
 		let data = {
 			paletteKey: key
 		};
 		$.ajax({
-				url: '/saveOpenedPalette',
+				url: '/saveCurrentPalette',
 				type: 'POST',
 				dataType: 'json',
 				data: data,
@@ -742,9 +787,9 @@ $(() => {
 			}
 		})
 	}
-	function loadOpenedPalette(callback) {
+	function loadLastPalette(callback) {
 		$.ajax({
-				url: '/loadOpenedPalette',
+				url: '/loadLastPalette',
 				type: 'POST',
 				dataType: 'json',
 				data: {},
